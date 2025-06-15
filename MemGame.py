@@ -29,6 +29,20 @@ dugme_nova_igra = pygame.Rect(SIRINA // 2 - 100, VISINA // 2 + 60, 200, 50)
 slova = list("A B C D E F G H I J K L M N O P".split())
 simboli_brojevi = list("1 2 3 4 5 6 7 8 9".split())
 
+def napravi_pozicije_karti(redova, kolona):
+    pozicije = []
+    for i in range(redova):
+        for j in range(kolona):
+            x = RAZMAK + j * (VELICINA_KARTE + RAZMAK)
+            y = RAZMAK + i * (VELICINA_KARTE + RAZMAK)
+            pozicije.append((x, y))
+    return pozicije
+
+def generisi_parove(pool_simbola, broj):
+    simboli = random.sample(pool_simbola, broj) * 2
+    random.shuffle(simboli)
+    return simboli
+
 
 
 
