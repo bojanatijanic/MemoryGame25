@@ -17,3 +17,18 @@ ZELENO=(0, 200, 0)
 CRVENO=(255, 0, 0)
 PLAVO=(0, 100, 255)
 
+VELICINA_KARTE = 100
+RAZMAK = 20
+
+pozadina = pygame.image.load("wp5035280.webp")
+pozadina = pygame.transform.scale(pozadina, (SIRINA, VISINA))
+
+kraj_igre = False
+dugme_nova_igra = pygame.Rect(SIRINA // 2 - 100, VISINA // 2 + 60, 200, 50)
+
+slova = list("A B C D E F G H I J K L M N O P".split())
+simboli_brojevi = list("1 2 3 4 5 6 7 8 9".split())
+
+
+
+
