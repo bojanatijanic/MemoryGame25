@@ -43,6 +43,22 @@ def generisi_parove(pool_simbola, broj):
     random.shuffle(simboli)
     return simboli
 
+class Karta:
+    def_ini_(self, simbol, pozicija):
+        self.simbol = simbol
+        self.pozicija = pozicija
+        self.rect = pygame.Rect(pozicija[0], pozicija[1], VELICINA_KARTE, VELICINA_KARTE)
+        self.otkrivena = False
+        self.pogodjena = False
 
+    def crtaj(self, ekran, kineski=False):
+        if self.otkrivena or self.pogodjena:
+            pygame.draw.rect(ekran, BIJELO, self.rect)
+            font = font_znak if kineski else font_veliki
+            tekst = font.render(str(self.simbol), True, CRNO)
+            tekst_rect = tekst.get_rect(center=self.rect.center)
+            ekran.blit(tekst, tekst_rect)
+        else:
+            pygame.draw.rect(ekran, ZELENO, self.rect)
 
 
