@@ -174,5 +174,30 @@ while radi:
                 karte[i1], karte[i2] = karte[i2], karte[i1]
 
                 pozicije = napravi_pozicije_karti(4, 4)
+                for i, karta in enumerate(karte):
+                    karta.pozicija = pozicije[i]
+                    karta.rect.topleft = pozicije[i]
 
+            prva_karta.otkrivena = False
+            druga_karta.otkrivena = False
 
+        prva_karta = None
+        druga_karta = None
+
+    for k in karte:
+        k.crtaj(ekran, koristi_slova)
+
+    info = font_mali.render(f"Pokušaja: {pokusaji}  Vrijeme: {proteklo}s", True, BIJELO)
+    ekran.blit(info, (10, VISINA - 80))
+
+    if parovi == len(karte) // 2:
+        centrirani_tekst("Pobjeda!", VISINA // 2 - 60, CRVENO)
+        pygame.draw.rect(ekran, PLAVO, dugme_nova_igra)
+        tekst = font_mali.render("Nova Igra", True, BIJELO)
+        ekran.blit(tekst, tekst.get_rect(center=dugme_nova_igra.center))
+        kraj_igre = True
+
+    pygame.display.flip()
+    sat.tick(30)
+
+pygame.quit()
