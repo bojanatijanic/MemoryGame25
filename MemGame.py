@@ -61,4 +61,38 @@ class Karta:
         else:
             pygame.draw.rect(ekran, ZELENO, self.rect)
 
+def centrirani_tekst(tekst, y, boja=CRVENO):
+    ispis = font_veliki.render(tekst, True, boja)
+    ekran.blit(ispis, (SIRINA // 2 - ispis.get_width() // 2, y))
+
+def meni_nivoa():
+    ekran.blit(pozadina,(0,0))
+    centrirani_tekst("Izaberi nivo", 100)
+
+    dugme_lako = pygame.Rect(SIRINA // 2 - 150, 230, 300, 60)
+    dugme_tesko = pygame.Rect(SIRINA // 2 - 150, 320, 300, 60)
+    dugme_mesano = pygame.Rect(SIRINA // 2 - 150, 410, 300, 60)
+
+    pygame.draw.rect(ekran, PLAVO, dugme_lako)
+    pygame.draw.rect(ekran, CRVENO, dugme_tesko)
+    pygame.draw.rect(ekran, (200, 100, 0), dugme_mesano)
+
+    ekran.blit(font_mali.render("Brojevi", True, BIJELO), (dugme_lako.x+110, dugme_lako.y + 15))
+    ekran.blit(font_mali.render("Slova", True, BIJELO), (dugme_tesko.x+120, dugme_tesko.y + 15))
+    ekran.blit(font_mali.render("Zamjena karata", True, BIJELO), (dugme_mesano.x + 60, dugme_mesano.y + 15))
+    pygame.display.flip()
+
+    while True:
+        for dogadjaj in pygame.event.get():
+            if dogadjaj.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif dogadjaj.type == pygame.MOUSEBUTTONDOWN:
+                if dugme_lako.collidepoint(dogadjaj.pos):
+                    return 'easy'
+                elif dugme_tesko.collidepoint(dogadjaj.pos):
+                    return 'hard'
+                elif dugme_mesano.collidepoint(dogadjaj.pos):
+                    return 'mix'
+
 
