@@ -95,4 +95,41 @@ def meni_nivoa():
                 elif dugme_mesano.collidepoint(dogadjaj.pos):
                     return 'mix'
 
+def resetuj_igru(nivo):
+    global karte, prva_karta, druga_karta, parovi, pokusaji, kraj_igre, dugme_prikazi, pocetak_vremena, koristi_slova, trenutni_nivo
+
+    redovi, kolone = (4, 4)
+    pool = simboli_brojevi
+    koristi_slova = False
+
+    if nivo == 'hard':
+        pool = slova
+        koristi_slova = True
+
+    pozicije = napravi_pozicije_karti(redovi, kolone)
+    simboli = generisi_parove(pool, (redovi * kolone) // 2)
+    karte = [Karta(simboli[i], pozicije[i]) for i in range(redovi * kolone)]
+
+    prva_karta = None
+    druga_karta = None
+    parovi = 0
+    pokusaji = 0
+    kraj_igre = False
+    dugme_prikazi = False
+    pocetak_vremena = time.time()
+    trenutni_nivo = nivo
+
+trenutni_nivo = meni_nivoa()
+resetuj_igru(trenutni_nivo)
+
+ekran.blit(pozadina,(0,0))
+for k in karte:
+    k.otkrivena = True
+    k.crtaj(ekran, koristi_slova)
+ekran.blit(font_mali.render("Zapamti parove!", True, BIJELO), (10, VISINA - 80))
+pygame.display.flip()
+pygame.time.wait(3000)
+for k in karte:
+    k.otkrivena = False
+
 
