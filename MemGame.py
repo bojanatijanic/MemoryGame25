@@ -132,4 +132,47 @@ pygame.time.wait(3000)
 for k in karte:
     k.otkrivena = False
 
+radi = True
+sat = pygame.time.Clock()
+while radi:
+    ekran.blit(pozadina,(0,0))
+    proteklo = int(time.time() - pocetak_vremena)
+
+    for dogadjaj in pygame.event.get():
+        if dogadjaj.type == pygame.QUIT:
+            radi = False
+        elif dogadjaj.type == pygame.MOUSEBUTTONDOWN:
+            if kraj_igre and dugme_nova_igra.collidepoint(dogadjaj.pos):
+                trenutni_nivo = meni_nivoa()
+                resetuj_igru(trenutni_nivo)
+            elif not kraj_igre:
+                if prva_karta is None or (prva_karta and druga_karta is None):
+                    for k in karte:
+                        if k.rect.collidepoint(dogadjaj.pos) and not k.otkrivena and not k.pogodjena:
+                            k.otkrivena = True
+                            if prva_karta is None:
+                                prva_karta = k
+                            elif druga_karta is None:
+                                druga_karta = k
+                                pokusaji += 1
+
+    if prva_karta and druga_karta:
+        for k in karte:
+            k.crtaj(ekran, koristi_slova)
+        pygame.display.flip()
+        pygame.time.wait(700)
+
+        if prva_karta.simbol == druga_karta.simbol:
+            prva_karta.pogodjena = True
+            druga_karta.pogodjena = True
+            parovi += 1
+        else:
+            if trenutni_nivo == 'mix':
+                i1 = karte.index(prva_karta)
+                i2 = karte.index(druga_karta)
+
+                karte[i1], karte[i2] = karte[i2], karte[i1]
+
+                pozicije = napravi_pozicije_karti(4, 4)
+
 
